@@ -8,6 +8,11 @@
 - アラーム全画面表示になる
 - 全画面表示の時に、ラベルと何かメッセージを表示
 
+追加機能:
+- ダークモード
+- スヌーズ
+- レスポンシブデザイン https://pub.dev/packages/flutter_screenutil
+
 ツール
 - Riverpod
 - Freezed: コードgenerator
@@ -15,15 +20,17 @@
 - shared_preferences: ストレージ
 
 フォルダ構成
+https://zenn.dev/web_tips/articles/530d02aaf90400
 Views
 - home.dart
 複数のアラームを表示する場所
 右下にfloating buttonでアラーム追加可能
 
-Widgets
+components
 - Alarm
     - alarms.dart
 Home.dartに表示するアラームのウィジェット
 それぞれのアラームに、削除ボタンをつける
     - configuration.dart
 alarms.dartのアラームをクリックすると、モーダルが表示され、変更できる
+
