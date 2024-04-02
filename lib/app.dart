@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 10), _onTimer);
+    // Timer(const Duration(seconds: 10), _onTimer);
   }
 
   void _onTimer() {
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Text("hi"),
+      home: const HomeScreen(),
     );
   }
 }
