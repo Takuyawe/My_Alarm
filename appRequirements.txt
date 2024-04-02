@@ -1,0 +1,29 @@
+アラームアプリ
+言語: 英語
+
+機能：
+- アラーム時刻の設定
+- ラベルの設定
+- 繰り返し機能
+- アラーム全画面表示になる
+- 全画面表示の時に、ラベルと何かメッセージを表示
+
+ツール
+- Riverpod
+- Freezed: コードgenerator
+- flutter_gen: asset管理
+- shared_preferences: ストレージ
+
+フォルダ構成
+Views
+- home.dart
+複数のアラームを表示する場所
+右下にfloating buttonでアラーム追加可能
+
+Widgets
+- Alarm
+    - alarms.dart
+Home.dartに表示するアラームのウィジェット
+それぞれのアラームに、削除ボタンをつける
+    - configuration.dart
+alarms.dartのアラームをクリックすると、モーダルが表示され、変更できる
