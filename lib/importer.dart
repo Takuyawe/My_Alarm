@@ -8,3 +8,4 @@ export "package:my_alarm/views/home.dart";
 export "package:my_alarm/constants/colors.dart";
 export 'package:my_alarm/components/alarm/alarm_card.dart';
 export 'package:my_alarm/components/alarm/alarm_config_screen.dart';
+export "package:my_alarm/components/alarm/week_button.dart";
