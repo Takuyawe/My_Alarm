@@ -12,7 +12,7 @@ final sharedPreferencesInstanceProvider =
 
 final alarmDataProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final SharedPreferences prefs =
-      await ref.watch(sharedPreferencesInstanceProvider.future);
+      await ref.read(sharedPreferencesInstanceProvider.future);
 
   final String? alarmDataJson = prefs.getString("alarmData");
 

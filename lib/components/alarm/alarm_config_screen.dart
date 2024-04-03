@@ -3,6 +3,13 @@ import 'package:my_alarm/importer.dart';
 
 void showAlarmConfigScreen(BuildContext context) {
   // TODO: receive alarm data here, if not set, add a new alarm
+  // TODO: receive a parameter "newAlarm" to determine whether it's a new alarm or not
+  final newAlarm = true;
+  String id = Uuid().v4();
+  List<int> repeatedDays = [0, 0, 0, 0, 0, 0, 0];
+  String label = "Default";
+  bool isActive = false;
+
   showDialog(
       context: context,
       barrierDismissible: false,

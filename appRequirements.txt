@@ -1,6 +1,15 @@
 アラームアプリ
 言語: 英語
 
+データの流れ
+1. アプリの初期化時に、shared_preferencesからアラームデータを取得
+2. providerでアラームデータを定義
+3. uiを動的に変更
+
+開発の流れ
+1. アラームデータを追加し、shared_preferencesに格納
+2. providerの設定 future?
+
 機能：
 - アラーム時刻の設定
 - ラベルの設定
@@ -21,16 +30,4 @@
 
 フォルダ構成
 https://zenn.dev/web_tips/articles/530d02aaf90400
-Views
-- home.dart
-複数のアラームを表示する場所
-右下にfloating buttonでアラーム追加可能
-
-components
-- Alarm
-    - alarms.dart
-Home.dartに表示するアラームのウィジェット
-それぞれのアラームに、削除ボタンをつける
-    - configuration.dart
-alarms.dartのアラームをクリックすると、モーダルが表示され、変更できる
 
