@@ -8,25 +8,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  static const platform = MethodChannel("com.example.my_alarm/focus");
-
-  Future<void> _bringAppToFront() async {
-    try {
-      await platform.invokeMethod("bringToFront");
-    } on PlatformException catch (e) {
-      print("Failed to bring app to front: '${e.message}'.");
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Timer(const Duration(seconds: 10), _onTimer);
-  }
-
-  void _onTimer() {
-    _bringAppToFront();
-  }
 
   @override
   Widget build(BuildContext context) {
