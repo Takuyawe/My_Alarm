@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:my_alarm/importer.dart';
+import 'package:my_alarm/providers/alarm_data_provider.dart';
 
-void showAlarmConfigScreen(BuildContext context) {
+void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
   // TODO: receive alarm data here, if not set, add a new alarm
   // TODO: receive a parameter "newAlarm" to determine whether it's a new alarm or not
   final newAlarm = true;
   String id = Uuid().v4();
+  String alarmTime = DateFormat("HH:mm").format(DateTime.now());
   List<int> repeatedDays = [0, 0, 0, 0, 0, 0, 0];
   String label = "Default";
   bool isActive = false;
@@ -130,7 +134,18 @@ void showAlarmConfigScreen(BuildContext context) {
                                   fontSize: 15,
                                   color: baseDarkColor,
                                   fontWeight: FontWeight.w500)),
-                          onPressed: () {}),
+                          onPressed: () async {
+                            Map<String, dynamic> alarmData = {
+                              "id": id,
+                              "alarmTime": alarmTime,
+                              "label": label,
+                              "isActive": isActive,
+                              "repeatedDays": repeatedDays
+                            };
+                            ref
+                                .watch(alarmRepositoryProvider)
+                                .saveAlarm(alarmData);
+                          }),
                       Gap(20)
                     ],
                   )

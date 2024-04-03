@@ -1,24 +1,28 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_alarm/importer.dart';
 
-class AlarmCard extends StatelessWidget {
-  const AlarmCard({super.key});
+class AlarmCard extends ConsumerWidget {
+  final AlarmData? alarmData;
+
+  const AlarmCard({super.key, this.alarmData});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
         height: 270,
         width: 270,
         child: GestureDetector(
-            onTap: () => {showAlarmConfigScreen(context)},
+            onTap: () => {showAlarmConfigScreen(context, ref)},
             child: Card(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               color: grey,
               child: Column(children: [
                 ListTile(
-                    title: Text("10:00",
+                    title: Text(
+                        alarmData == null ? "10:00" : alarmData!.alarmTime,
                         style: TextStyle(
                             fontSize: 50,
                             color: white,

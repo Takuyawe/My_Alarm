@@ -10,13 +10,13 @@ final sharedPreferencesInstanceProvider =
   return await SharedPreferences.getInstance();
 });
 
-final alarmDataProvider = FutureProvider<Map<String, dynamic>>((ref) async {
-  final SharedPreferences prefs =
-      await ref.read(sharedPreferencesInstanceProvider.future);
+// final alarmDataProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+//   final SharedPreferences prefs =
+//       await ref.read(sharedPreferencesInstanceProvider.future);
 
-  final String? alarmDataJson = prefs.getString("alarmData");
+//   final String? alarmDataJson = prefs.getString("alarmData");
 
-  if (alarmDataJson == null) return {};
+//   if (alarmDataJson == null) return {};
 
-  return jsonDecode(alarmDataJson);
-});
+//   return jsonDecode(alarmDataJson);
+// });

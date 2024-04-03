@@ -1,12 +1,19 @@
 import 'package:my_alarm/importer.dart';
+import 'package:my_alarm/models/alarm_data.dart';
 
 class AlarmRepository {
-  Future<Map<String, dynamic>> getAlarmData() async {
+  Future<AlarmData> getAlarmData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? alarmDataString = prefs.getString('alarmData');
-    if (alarmDataString == null) return {};
-    Map<String, dynamic> alarmData = jsonDecode(alarmDataString);
-    return alarmData;
+    String? alarmDataJson = prefs.getString('alarmData');
+    if (alarmDataJson == null)
+      return AlarmData(
+          id: const Uuid().v4(),
+          alarmTime: "",
+          label: "",
+          isActive: false,
+          repeatedDays: []);
+    Map<String, dynamic> json = jsonDecode(alarmDataJson);
+    return AlarmData.fromJson(json);
   }
 
   Future<void> saveAlarm(Map<String, dynamic> alarmData) async {

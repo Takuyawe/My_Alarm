@@ -14,3 +14,6 @@ export 'package:my_alarm/components/alarm/alarm_card.dart';
 export 'package:my_alarm/components/alarm/alarm_config_screen.dart';
 export "package:my_alarm/components/alarm/week_button.dart";
 export "package:my_alarm/repository/alarm_repository.dart";
+export "package:my_alarm/providers/alarm_data_provider.dart";
+export "package:my_alarm/core/swift_platform_service.dart";
+export "package:my_alarm/models/alarm_data.dart";
