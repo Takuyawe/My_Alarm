@@ -1,7 +1,11 @@
 import 'package:my_alarm/importer.dart';
 
 class WeekButton extends StatelessWidget {
-  const WeekButton({super.key});
+  final String weekDay;
+  final bool isRepeated;
+
+  const WeekButton(
+      {super.key, required this.weekDay, required this.isRepeated});
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +15,16 @@ class WeekButton extends StatelessWidget {
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10))),
-            minimumSize: MaterialStateProperty.all(Size(40, 45)),
+            side: MaterialStateProperty.all(
+                BorderSide(color: isRepeated ? transparent : white, width: 1)),
+            fixedSize: MaterialStateProperty.all(const Size(40, 35)),
             // TODO: change color depending on whether it's checked or not
-            backgroundColor: MaterialStateProperty.all(white)),
-        child: Text("Sun",
-            style:
-                TextStyle(color: baseDarkColor, fontWeight: FontWeight.w300)));
+            backgroundColor: isRepeated
+                ? MaterialStateProperty.all(white)
+                : MaterialStateProperty.all(baseDarkColor)),
+        child: Text(weekDay,
+            style: TextStyle(
+                color: isRepeated ? baseDarkColor : white,
+                fontWeight: FontWeight.w300)));
   }
 }
