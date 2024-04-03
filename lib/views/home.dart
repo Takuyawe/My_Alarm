@@ -9,7 +9,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  AlarmData? alarmData;
+  late List<AlarmData> alarmDataList;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -18,21 +19,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void init() async {
-    alarmData = await ref.read(alarmRepositoryProvider).getAlarmData();
-    print(alarmData!.alarmTime);
+    alarmDataList = await ref.read(alarmRepositoryProvider).getAlarmData();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+          backgroundColor: baseDarkColor,
+          appBar: AppBar(title: const Text("Alarm App")),
+          body: const Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: baseDarkColor,
       appBar: AppBar(title: const Text("Alarm App")),
       body: Container(
           child: Row(
-        children: [
-          AlarmCard(alarmData: alarmData),
-        ],
-      )),
+              children: alarmDataList
+                  .map((alarmData) => AlarmCard(alarmData: alarmData))
+                  .toList())),
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
         child: const Icon(Icons.add),

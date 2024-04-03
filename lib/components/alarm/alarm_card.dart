@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_alarm/importer.dart';
 
 class AlarmCard extends ConsumerWidget {
-  final AlarmData? alarmData;
+  final AlarmData alarmData;
 
-  const AlarmCard({super.key, this.alarmData});
+  const AlarmCard({super.key, required this.alarmData});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,8 +21,7 @@ class AlarmCard extends ConsumerWidget {
               color: grey,
               child: Column(children: [
                 ListTile(
-                    title: Text(
-                        alarmData == null ? "10:00" : alarmData!.alarmTime,
+                    title: Text(alarmData.alarmTime,
                         style: TextStyle(
                             fontSize: 50,
                             color: white,

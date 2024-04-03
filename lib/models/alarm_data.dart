@@ -25,4 +25,14 @@ class AlarmData {
           (json['repeatedDays'] as List).map((e) => e as int).toList(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'alarmTime': alarmTime,
+      'label': label,
+      'isActive': isActive,
+      'repeatedDays': repeatedDays
+    };
+  }
 }

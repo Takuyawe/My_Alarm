@@ -135,16 +135,15 @@ void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
                                   color: baseDarkColor,
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
-                            Map<String, dynamic> alarmData = {
-                              "id": id,
-                              "alarmTime": alarmTime,
-                              "label": label,
-                              "isActive": isActive,
-                              "repeatedDays": repeatedDays
-                            };
+                            AlarmData alarmData = AlarmData(
+                                id: id,
+                                alarmTime: alarmTime,
+                                label: label,
+                                isActive: isActive,
+                                repeatedDays: repeatedDays);
                             ref
                                 .watch(alarmRepositoryProvider)
-                                .saveAlarm(alarmData);
+                                .saveAlarmData(alarmData);
                           }),
                       Gap(20)
                     ],
