@@ -18,7 +18,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showAlarmConfigScreen(context);
+        },
       ),
     );
   }
