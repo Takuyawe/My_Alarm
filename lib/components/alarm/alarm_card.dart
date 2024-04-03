@@ -15,7 +15,8 @@ class AlarmCard extends ConsumerWidget {
         height: 270,
         width: 270,
         child: GestureDetector(
-            onTap: () => {showAlarmConfigScreen(context, ref)},
+            onTap: () =>
+                {showAlarmConfigScreen(context, ref, alarmData: alarmData)},
             child: Card(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               color: grey,
