@@ -19,9 +19,10 @@ import 'package:my_alarm/importer.dart';
 // }
 
 void showAlarmConfigScreen(BuildContext context) {
+  // TODO: receive alarm data here, if not set, add a new alarm
   showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (context) => Dialog(
           shadowColor: white,
           child: Container(
@@ -121,7 +122,10 @@ void showAlarmConfigScreen(BuildContext context) {
                                   fontSize: 15,
                                   color: white,
                                   fontWeight: FontWeight.w500)),
-                          onPressed: () {}),
+                          onPressed: () {
+                            // TODO: if changed, ask for confirmation
+                            Navigator.pop(context);
+                          }),
                       Gap(10),
                       OutlinedButton(
                           style: ButtonStyle(
