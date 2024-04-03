@@ -5,3 +5,4 @@ const lightBlue = Color(0xFFC5CAE9);
 const grey = Color(0xFF616161);
 const white = Color(0xFFFFFFFF);
 const lightGrey = Color(0xFFBDBDBD);
+const transparent = Colors.transparent;
