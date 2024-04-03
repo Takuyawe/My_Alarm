@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:my_alarm/importer.dart';
 import 'package:my_alarm/providers/alarm_data_provider.dart';
 
@@ -46,7 +47,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         backgroundColor: lightBlue,
         child: const Icon(Icons.add),
         onPressed: () {
-          showAlarmConfigScreen(context, ref);
+          AlarmData alarmData = AlarmData(
+              id: Uuid().v4(),
+              alarmTime: DateFormat("HH:mm").format(DateTime.now()),
+              repeatedDays: [0, 0, 0, 0, 0, 0, 0],
+              label: "Alarm",
+              isActive: true);
+          showAlarmConfigScreen(context, ref,
+              alarmData: alarmData, newAlarm: true);
         },
       ),
     );
