@@ -1,4 +1,3 @@
-import 'package:my_alarm/components/alarm/alarm_config_screen.dart';
 import 'package:my_alarm/importer.dart';
 
 class HomeScreen extends StatelessWidget {

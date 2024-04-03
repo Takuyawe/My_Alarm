@@ -12,6 +12,8 @@ class WeekButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10))),
             minimumSize: MaterialStateProperty.all(Size(40, 45)),
             backgroundColor: MaterialStateProperty.all(white)),
-        child: Text("Sun"));
+        child: Text("Sun",
+            style:
+                TextStyle(color: baseDarkColor, fontWeight: FontWeight.w300)));
   }
 }
