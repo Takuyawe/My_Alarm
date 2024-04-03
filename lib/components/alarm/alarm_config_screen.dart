@@ -4,15 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:my_alarm/importer.dart';
 import 'package:my_alarm/providers/alarm_data_provider.dart';
 
-void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
+void showAlarmConfigScreen(BuildContext context, WidgetRef ref,
+    {required AlarmData alarmData, bool newAlarm = false}) {
   // TODO: receive alarm data here, if not set, add a new alarm
   // TODO: receive a parameter "newAlarm" to determine whether it's a new alarm or not
-  final newAlarm = true;
-  String id = Uuid().v4();
-  String alarmTime = DateFormat("HH:mm").format(DateTime.now());
-  List<int> repeatedDays = [0, 0, 0, 0, 0, 0, 0];
-  String label = "Default";
-  bool isActive = false;
 
   showDialog(
       context: context,
@@ -34,7 +29,7 @@ void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
                         border: Border.all(color: white),
                         color: baseDarkColor,
                         borderRadius: BorderRadius.circular(5)),
-                    child: Text("10:00",
+                    child: Text(alarmData.alarmTime,
                         style: TextStyle(
                             fontSize: 60,
                             color: white,
@@ -54,9 +49,21 @@ void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  WeekButton(),
-                                  WeekButton(),
-                                  WeekButton(),
+                                  WeekButton(
+                                      weekDay: "Sun",
+                                      isRepeated: alarmData.repeatedDays[0] == 1
+                                          ? true
+                                          : false),
+                                  WeekButton(
+                                      weekDay: "Mon",
+                                      isRepeated: alarmData.repeatedDays[1] == 1
+                                          ? true
+                                          : false),
+                                  WeekButton(
+                                      weekDay: "Tue",
+                                      isRepeated: alarmData.repeatedDays[2] == 1
+                                          ? true
+                                          : false),
                                 ],
                               )),
                           Gap(7),
@@ -66,10 +73,26 @@ void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  WeekButton(),
-                                  WeekButton(),
-                                  WeekButton(),
-                                  WeekButton(),
+                                  WeekButton(
+                                      weekDay: "Wed",
+                                      isRepeated: alarmData.repeatedDays[3] == 1
+                                          ? true
+                                          : false),
+                                  WeekButton(
+                                      weekDay: "Thu",
+                                      isRepeated: alarmData.repeatedDays[4] == 1
+                                          ? true
+                                          : false),
+                                  WeekButton(
+                                      weekDay: "Fri",
+                                      isRepeated: alarmData.repeatedDays[5] == 1
+                                          ? true
+                                          : false),
+                                  WeekButton(
+                                      weekDay: "Sat",
+                                      isRepeated: alarmData.repeatedDays[6] == 1
+                                          ? true
+                                          : false),
                                 ],
                               )),
                         ],
@@ -135,12 +158,6 @@ void showAlarmConfigScreen(BuildContext context, WidgetRef ref) {
                                   color: baseDarkColor,
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
-                            AlarmData alarmData = AlarmData(
-                                id: id,
-                                alarmTime: alarmTime,
-                                label: label,
-                                isActive: isActive,
-                                repeatedDays: repeatedDays);
                             ref
                                 .watch(alarmRepositoryProvider)
                                 .saveAlarmData(alarmData);
