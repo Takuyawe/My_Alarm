@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_alarm/components/alarm/update_alarm_time_formatter.dart';
 import 'package:my_alarm/importer.dart';
 
 void showAlarmConfigScreen(BuildContext context, WidgetRef ref,
@@ -23,13 +25,28 @@ class AlarmConfigScreen extends ConsumerStatefulWidget {
 }
 
 class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
+  int _alarmTimeFocused = 0;
+
+  List<String> getTimeList(String time) {
+    List<String> timeParts = time.split(":");
+    String hour = int.parse(timeParts[0]).toString();
+    String min = int.parse(timeParts[1]).toString();
+    return [hour, min];
+  }
+
   @override
   Widget build(BuildContext context) {
     String _id = widget.alarmData.id;
-    String _alarmTime = widget.alarmData.alarmTime;
+    List<String> _alarmTime = getTimeList(widget.alarmData.alarmTime);
     String _label = widget.alarmData.label;
     List<int> _repeatedDays = widget.alarmData.repeatedDays;
-    int _alarmTimeFocused = 0;
+
+    void handleChangeAlarmTimeFocused(int index) {
+      if (_alarmTimeFocused == index) return;
+      setState(() {
+        _alarmTimeFocused = _alarmTimeFocused == 0 ? 1 : 0;
+      });
+    }
 
     void handleChangeLabel(String value) {
       setState(() {
@@ -65,13 +82,27 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            width: 70,
+                            alignment: Alignment.center,
+                            width: 80,
                             margin: EdgeInsets.symmetric(vertical: 5),
                             color: _alarmTimeFocused == 0
                                 ? lightBlue
                                 : baseDarkColor,
-                            child: Text("10",
+                            child: TextFormField(
+                                initialValue: _alarmTime[0],
+                                onTap: () => handleChangeAlarmTimeFocused(0),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  UpdateAlarmTimeFormatter(isHour: true)
+                                ],
+                                showCursor: false,
+                                autofocus: true,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
                                 style: TextStyle(
+                                    height: 1.2,
                                     fontSize: 60,
                                     color: white,
                                     fontWeight: FontWeight.w500))),
@@ -82,13 +113,26 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 color: white,
                                 fontWeight: FontWeight.w500)),
                         Container(
-                            width: 70,
+                            alignment: Alignment.center,
+                            width: 80,
                             margin: EdgeInsets.symmetric(vertical: 5),
                             color: _alarmTimeFocused == 1
                                 ? lightBlue
                                 : baseDarkColor,
-                            child: Text("10",
+                            child: TextFormField(
+                                initialValue: _alarmTime[1],
+                                onTap: () => handleChangeAlarmTimeFocused(1),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  UpdateAlarmTimeFormatter(isHour: false)
+                                ],
+                                showCursor: false,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
                                 style: TextStyle(
+                                    height: 1.2,
                                     fontSize: 60,
                                     color: white,
                                     fontWeight: FontWeight.w500))),
