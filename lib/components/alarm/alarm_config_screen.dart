@@ -28,11 +28,10 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
     String _id = widget.alarmData.id;
     String _alarmTime = widget.alarmData.alarmTime;
     String _label = widget.alarmData.label;
-    bool _isActive = widget.alarmData.isActive;
     List<int> _repeatedDays = widget.alarmData.repeatedDays;
+    int _alarmTimeFocused = 0;
 
     void handleChangeLabel(String value) {
-      print(value);
       setState(() {
         _label = value;
       });
@@ -56,17 +55,45 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.all(30),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: white),
-                      color: baseDarkColor,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(widget.alarmData.alarmTime,
-                      style: TextStyle(
-                          fontSize: 60,
-                          color: white,
-                          fontWeight: FontWeight.w500)),
-                ),
+                    width: 200,
+                    margin: EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: white),
+                        color: baseDarkColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 70,
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            color: _alarmTimeFocused == 0
+                                ? lightBlue
+                                : baseDarkColor,
+                            child: Text("10",
+                                style: TextStyle(
+                                    fontSize: 60,
+                                    color: white,
+                                    fontWeight: FontWeight.w500))),
+                        Text(":",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 60,
+                                color: white,
+                                fontWeight: FontWeight.w500)),
+                        Container(
+                            width: 70,
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            color: _alarmTimeFocused == 1
+                                ? lightBlue
+                                : baseDarkColor,
+                            child: Text("10",
+                                style: TextStyle(
+                                    fontSize: 60,
+                                    color: white,
+                                    fontWeight: FontWeight.w500))),
+                      ],
+                    )),
                 ListTile(
                     leading: Text("Repeat: ",
                         style: TextStyle(
@@ -83,23 +110,17 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 WeekButton(
                                     weekDayNum: 0,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[0] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[0] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                                 WeekButton(
                                     weekDayNum: 1,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[1] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[1] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                                 WeekButton(
                                     weekDayNum: 2,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[2] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[2] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                               ],
                             )),
@@ -112,30 +133,22 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 WeekButton(
                                     weekDayNum: 3,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[3] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[3] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                                 WeekButton(
                                     weekDayNum: 4,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[4] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[4] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                                 WeekButton(
                                     weekDayNum: 5,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[5] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[5] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                                 WeekButton(
                                     weekDayNum: 6,
                                     isRepeated:
-                                        widget.alarmData.repeatedDays[6] == 1
-                                            ? true
-                                            : false,
+                                        _repeatedDays[6] == 1 ? true : false,
                                     onToggleButton: handleToggleButton),
                               ],
                             )),
