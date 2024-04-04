@@ -29,8 +29,8 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
 
   List<String> getTimeList(String time) {
     List<String> timeParts = time.split(":");
-    String hour = int.parse(timeParts[0]).toString();
-    String min = int.parse(timeParts[1]).toString();
+    String hour = int.parse(timeParts[0]).toString().padLeft(2, "0");
+    String min = int.parse(timeParts[1]).toString().padLeft(2, "0");
     return [hour, min];
   }
 
@@ -260,9 +260,9 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 fontWeight: FontWeight.w500)),
                         onPressed: () async {
                           if (widget.newAlarm) {
-                            ref
-                                .watch(alarmRepositoryProvider)
-                                .saveAlarmData(widget.alarmData);
+                            final provider = ref.watch(alarmRepositoryProvider);
+                            final prefs = await provider.getSharedPreferences();
+                            provider.saveAlarmData(widget.alarmData, prefs);
                           }
                         }),
                     Gap(20)

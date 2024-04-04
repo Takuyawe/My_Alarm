@@ -1,8 +1,11 @@
 import 'package:my_alarm/importer.dart';
 
 class AlarmRepository {
-  Future<List<AlarmData>> getAlarmData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<SharedPreferences> getSharedPreferences() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  Future<List<AlarmData>> getAlarmData(SharedPreferences prefs) async {
     String? alarmDataJson = prefs.getString(sharedPreferencesAlarmDataKey);
     if (alarmDataJson == null) return [];
     List<dynamic> jsonList = jsonDecode(alarmDataJson);
@@ -12,9 +15,9 @@ class AlarmRepository {
     return alarmDataList;
   }
 
-  Future<void> saveAlarmData(AlarmData alarmData) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final List<AlarmData> alarmDataList = await getAlarmData();
+  Future<void> saveAlarmData(
+      AlarmData alarmData, SharedPreferences prefs) async {
+    final List<AlarmData> alarmDataList = await getAlarmData(prefs);
     alarmDataList.add(alarmData);
     List<Map<String, dynamic>> alarmDataMapList =
         alarmDataList.map((alarm) => alarm.toJson()).toList();

@@ -5,7 +5,7 @@ class SwiftPlatformService {
 
   Future<void> bringAppToFront() async {
     try {
-      await platform.invokeMethod("bringToFront");
+      await platform.invokeMethod(swiftFuncName);
     } on PlatformException catch (e) {
       print("Failed to bring app to front: '${e.message}'.");
     }

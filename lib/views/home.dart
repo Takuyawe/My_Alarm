@@ -20,7 +20,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void init() async {
-    alarmDataList = await ref.read(alarmRepositoryProvider).getAlarmData();
+    final provider = ref.read(alarmRepositoryProvider);
+    final prefs = await provider.getSharedPreferences();
+    alarmDataList = await provider.getAlarmData(prefs);
     setState(() {
       isLoading = false;
     });
