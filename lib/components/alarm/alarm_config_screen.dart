@@ -25,6 +25,25 @@ class AlarmConfigScreen extends ConsumerStatefulWidget {
 class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
   @override
   Widget build(BuildContext context) {
+    String _id = widget.alarmData.id;
+    String _alarmTime = widget.alarmData.alarmTime;
+    String _label = widget.alarmData.label;
+    bool _isActive = widget.alarmData.isActive;
+    List<int> _repeatedDays = widget.alarmData.repeatedDays;
+
+    void handleChangeLabel(String value) {
+      print(value);
+      setState(() {
+        _label = value;
+      });
+    }
+
+    void handleToggleButton(int index) {
+      setState(() {
+        _repeatedDays[index] = _repeatedDays[index] == 0 ? 1 : 0;
+      });
+    }
+
     return (Dialog(
         shadowColor: white,
         child: Container(
@@ -62,23 +81,26 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 WeekButton(
-                                    weekDay: "Sun",
+                                    weekDayNum: 0,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[0] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                                 WeekButton(
-                                    weekDay: "Mon",
+                                    weekDayNum: 1,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[1] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                                 WeekButton(
-                                    weekDay: "Tue",
+                                    weekDayNum: 2,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[2] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                               ],
                             )),
                         Gap(7),
@@ -88,29 +110,33 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 WeekButton(
-                                    weekDay: "Wed",
+                                    weekDayNum: 3,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[3] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                                 WeekButton(
-                                    weekDay: "Thu",
+                                    weekDayNum: 4,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[4] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                                 WeekButton(
-                                    weekDay: "Fri",
+                                    weekDayNum: 5,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[5] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                                 WeekButton(
-                                    weekDay: "Sat",
+                                    weekDayNum: 6,
                                     isRepeated:
                                         widget.alarmData.repeatedDays[6] == 1
                                             ? true
-                                            : false),
+                                            : false,
+                                    onToggleButton: handleToggleButton),
                               ],
                             )),
                       ],
@@ -130,8 +156,8 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                       width: 250,
                       child: TextFormField(
                           maxLines: 1,
-                          controller:
-                              TextEditingController(text: "Initial value"),
+                          initialValue: _label,
+                          onChanged: handleChangeLabel,
                           style: TextStyle(color: white),
                           decoration: InputDecoration(
                             labelText: "Label",
@@ -176,9 +202,11 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 color: baseDarkColor,
                                 fontWeight: FontWeight.w500)),
                         onPressed: () async {
-                          ref
-                              .watch(alarmRepositoryProvider)
-                              .saveAlarmData(widget.alarmData);
+                          if (widget.newAlarm) {
+                            ref
+                                .watch(alarmRepositoryProvider)
+                                .saveAlarmData(widget.alarmData);
+                          }
                         }),
                     Gap(20)
                   ],

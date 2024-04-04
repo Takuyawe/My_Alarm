@@ -1,5 +1,3 @@
-import 'package:my_alarm/importer.dart';
-
 class AlarmData {
   final String id;
   final String alarmTime;
