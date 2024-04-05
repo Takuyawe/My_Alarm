@@ -6,8 +6,10 @@ import 'package:my_alarm/importer.dart';
 
 class AlarmCard extends ConsumerWidget {
   final AlarmData alarmData;
+  final Function updateFunc;
 
-  const AlarmCard({super.key, required this.alarmData});
+  const AlarmCard(
+      {super.key, required this.alarmData, required this.updateFunc});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,8 +17,10 @@ class AlarmCard extends ConsumerWidget {
         height: 270,
         width: 270,
         child: GestureDetector(
-            onTap: () =>
-                {showAlarmConfigScreen(context, ref, alarmData: alarmData)},
+            onTap: () => {
+                  showAlarmConfigScreen(context, ref,
+                      alarmData: alarmData, updateFunc: updateFunc)
+                },
             child: Card(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               color: grey,
@@ -35,7 +39,14 @@ class AlarmCard extends ConsumerWidget {
                           Text("Repeat: None",
                               style: TextStyle(color: white, fontSize: 20)),
                         ]),
-                    trailing: Icon(Icons.delete, color: white)),
+                    trailing: IconButton(
+                        onPressed: () async {
+                          final provider = ref.watch(alarmRepositoryProvider);
+                          final prefs = await provider.getSharedPreferences();
+                          await provider.deleteAlarmData(alarmData.id, prefs);
+                          updateFunc();
+                        },
+                        icon: Icon(Icons.delete, color: white))),
                 CupertinoSwitch(
                     value: true,
                     onChanged: (value) {},

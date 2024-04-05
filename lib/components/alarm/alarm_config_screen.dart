@@ -5,20 +5,27 @@ import 'package:my_alarm/components/alarm/update_alarm_time_formatter.dart';
 import 'package:my_alarm/importer.dart';
 
 void showAlarmConfigScreen(BuildContext context, WidgetRef ref,
-    {required AlarmData alarmData, bool newAlarm = false}) {
+    {required AlarmData alarmData,
+    bool newAlarm = false,
+    required Function updateFunc}) {
   showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return AlarmConfigScreen(alarmData: alarmData, newAlarm: newAlarm);
+        return AlarmConfigScreen(
+            alarmData: alarmData, newAlarm: newAlarm, updateFunc: updateFunc);
       });
 }
 
 class AlarmConfigScreen extends ConsumerStatefulWidget {
   final AlarmData alarmData;
   final bool newAlarm;
+  final Function updateFunc;
   const AlarmConfigScreen(
-      {super.key, required this.alarmData, this.newAlarm = false});
+      {super.key,
+      required this.alarmData,
+      this.newAlarm = false,
+      required this.updateFunc});
 
   @override
   ConsumerState<AlarmConfigScreen> createState() => _AlarmConfigScreenState();
@@ -262,7 +269,12 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                           if (widget.newAlarm) {
                             final provider = ref.watch(alarmRepositoryProvider);
                             final prefs = await provider.getSharedPreferences();
-                            provider.saveAlarmData(widget.alarmData, prefs);
+                            await provider.saveAlarmData(
+                                widget.alarmData, prefs);
+                            widget.updateFunc();
+                          }
+                          if (mounted) {
+                            Navigator.pop(context);
                           }
                         }),
                     Gap(20)

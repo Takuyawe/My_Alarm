@@ -28,6 +28,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
+  Future<void> updateAlarmDataList() async {
+    final provider = ref.read(alarmRepositoryProvider);
+    final prefs = await provider.getSharedPreferences();
+    final _alarmDataList = await provider.getAlarmData(prefs);
+    setState(() {
+      alarmDataList = _alarmDataList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
@@ -43,7 +52,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Container(
           child: Row(
               children: alarmDataList
-                  .map((alarmData) => AlarmCard(alarmData: alarmData))
+                  .map((alarmData) => AlarmCard(
+                      alarmData: alarmData, updateFunc: updateAlarmDataList))
                   .toList())),
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
@@ -56,7 +66,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               label: "Alarm",
               isActive: true);
           showAlarmConfigScreen(context, ref,
-              alarmData: alarmData, newAlarm: true);
+              alarmData: alarmData,
+              newAlarm: true,
+              updateFunc: updateAlarmDataList);
         },
       ),
     );

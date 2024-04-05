@@ -5,6 +5,19 @@ class AlarmRepository {
     return await SharedPreferences.getInstance();
   }
 
+  String encodeToJson(List<AlarmData> alarmDataList) {
+    List<Map<String, dynamic>> alarmDataMapList =
+        alarmDataList.map((alarm) => alarm.toJson()).toList();
+    return jsonEncode(alarmDataMapList);
+  }
+
+  Future<void> saveToSharedPreferences(
+      List<AlarmData> alarmDataList, SharedPreferences prefs) async {
+    await deleteSharedPreferencesData(prefs);
+    String alarmDataJson = encodeToJson(alarmDataList);
+    await prefs.setString(sharedPreferencesAlarmDataKey, alarmDataJson);
+  }
+
   Future<List<AlarmData>> getAlarmData(SharedPreferences prefs) async {
     String? alarmDataJson = prefs.getString(sharedPreferencesAlarmDataKey);
     if (alarmDataJson == null) return [];
@@ -19,9 +32,16 @@ class AlarmRepository {
       AlarmData alarmData, SharedPreferences prefs) async {
     final List<AlarmData> alarmDataList = await getAlarmData(prefs);
     alarmDataList.add(alarmData);
-    List<Map<String, dynamic>> alarmDataMapList =
-        alarmDataList.map((alarm) => alarm.toJson()).toList();
-    String alarmDataJson = jsonEncode(alarmDataMapList);
-    await prefs.setString(sharedPreferencesAlarmDataKey, alarmDataJson);
+    await saveToSharedPreferences(alarmDataList, prefs);
+  }
+
+  Future<void> deleteAlarmData(String id, SharedPreferences prefs) async {
+    final List<AlarmData> alarmDataList = await getAlarmData(prefs);
+    alarmDataList.removeWhere((element) => element.id == id);
+    await saveToSharedPreferences(alarmDataList, prefs);
+  }
+
+  Future<void> deleteSharedPreferencesData(SharedPreferences prefs) async {
+    await prefs.remove(sharedPreferencesAlarmDataKey);
   }
 }
