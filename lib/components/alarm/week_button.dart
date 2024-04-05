@@ -18,7 +18,6 @@ class WeekButton extends ConsumerStatefulWidget {
 class _WeekButtonState extends ConsumerState<WeekButton> {
   @override
   Widget build(BuildContext context) {
-    // TODO: receive params: [weekDay, isRepeated]
     return TextButton(
         onPressed: () {
           widget.onToggleButton(widget.weekDayNum);
@@ -29,7 +28,6 @@ class _WeekButtonState extends ConsumerState<WeekButton> {
             side: MaterialStateProperty.all(BorderSide(
                 color: widget.isRepeated ? transparent : white, width: 1)),
             fixedSize: MaterialStateProperty.all(const Size(40, 35)),
-            // TODO: change color depending on whether it's checked or not
             backgroundColor: widget.isRepeated
                 ? MaterialStateProperty.all(white)
                 : MaterialStateProperty.all(baseDarkColor)),

@@ -6,10 +6,10 @@ import 'package:my_alarm/importer.dart';
 
 class AlarmCard extends ConsumerWidget {
   final AlarmData alarmData;
-  final Function updateFunc;
+  final Function updateAlarmDataList;
 
   const AlarmCard(
-      {super.key, required this.alarmData, required this.updateFunc});
+      {super.key, required this.alarmData, required this.updateAlarmDataList});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +19,8 @@ class AlarmCard extends ConsumerWidget {
       child: GestureDetector(
           onTap: () => {
                 showAlarmConfigScreen(context, ref,
-                    alarmData: alarmData, updateFunc: updateFunc)
+                    alarmData: alarmData,
+                    updateAlarmDataList: updateAlarmDataList)
               },
           child: Card(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -33,7 +34,7 @@ class AlarmCard extends ConsumerWidget {
                       children: [
                         Text(alarmData.alarmTime,
                             style: TextStyle(
-                                fontSize: 50,
+                                fontSize: 55,
                                 color: white,
                                 fontWeight: FontWeight.w500)),
                         IconButton(
@@ -45,7 +46,7 @@ class AlarmCard extends ConsumerWidget {
                                   await provider.getSharedPreferences();
                               await provider.deleteAlarmData(
                                   alarmData.id, prefs);
-                              updateFunc();
+                              updateAlarmDataList();
                             },
                             icon: Icon(Icons.delete, color: white)),
                       ],
@@ -72,7 +73,7 @@ class AlarmCard extends ConsumerWidget {
                             final provider = ref.watch(alarmRepositoryProvider);
                             final prefs = await provider.getSharedPreferences();
                             await provider.toggleIsActive(alarmData.id, prefs);
-                            updateFunc();
+                            updateAlarmDataList();
                           },
                           thumbColor: white,
                           activeColor: baseDarkColor,

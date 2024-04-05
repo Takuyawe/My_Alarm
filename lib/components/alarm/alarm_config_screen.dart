@@ -7,25 +7,27 @@ import 'package:my_alarm/importer.dart';
 void showAlarmConfigScreen(BuildContext context, WidgetRef ref,
     {required AlarmData alarmData,
     bool newAlarm = false,
-    required Function updateFunc}) {
+    required Function updateAlarmDataList}) {
   showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlarmConfigScreen(
-            alarmData: alarmData, newAlarm: newAlarm, updateFunc: updateFunc);
+            alarmData: alarmData,
+            newAlarm: newAlarm,
+            updateAlarmDataList: updateAlarmDataList);
       });
 }
 
 class AlarmConfigScreen extends ConsumerStatefulWidget {
   final AlarmData alarmData;
   final bool newAlarm;
-  final Function updateFunc;
+  final Function updateAlarmDataList;
   const AlarmConfigScreen(
       {super.key,
       required this.alarmData,
       this.newAlarm = false,
-      required this.updateFunc});
+      required this.updateAlarmDataList});
 
   @override
   ConsumerState<AlarmConfigScreen> createState() => _AlarmConfigScreenState();
@@ -303,7 +305,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                             await provider.updateAlarmData(
                                 customizedAlarmData, _id, prefs);
                           }
-                          widget.updateFunc();
+                          widget.updateAlarmDataList();
                           if (mounted) {
                             Navigator.pop(context);
                           }

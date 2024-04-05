@@ -53,7 +53,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Row(
               children: alarmDataList
                   .map((alarmData) => AlarmCard(
-                      alarmData: alarmData, updateFunc: updateAlarmDataList))
+                      alarmData: alarmData,
+                      updateAlarmDataList: updateAlarmDataList))
                   .toList())),
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
@@ -68,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           showAlarmConfigScreen(context, ref,
               alarmData: alarmData,
               newAlarm: true,
-              updateFunc: updateAlarmDataList);
+              updateAlarmDataList: updateAlarmDataList);
         },
       ),
     );
