@@ -18,3 +18,4 @@ export "package:my_alarm/providers/alarm_data_provider.dart";
 export "package:my_alarm/core/swift_platform_service.dart";
 export "package:my_alarm/models/alarm_data.dart";
 export "package:my_alarm/modules/get_week_day.dart";
+export 'package:my_alarm/ui_core/get_repeat_string.dart';
