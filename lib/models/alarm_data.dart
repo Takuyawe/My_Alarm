@@ -2,7 +2,7 @@ class AlarmData {
   final String id;
   final String alarmTime;
   final String label;
-  final bool isActive;
+  bool isActive;
   final List<int> repeatedDays;
 
   AlarmData({

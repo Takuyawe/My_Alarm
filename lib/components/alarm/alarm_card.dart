@@ -47,12 +47,22 @@ class AlarmCard extends ConsumerWidget {
                           updateFunc();
                         },
                         icon: Icon(Icons.delete, color: white))),
-                CupertinoSwitch(
-                    value: true,
-                    onChanged: (value) {},
-                    thumbColor: white,
-                    activeColor: baseDarkColor,
-                    trackColor: lightGrey),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  height: 50,
+                  margin: EdgeInsets.only(left: 20),
+                  child: CupertinoSwitch(
+                      value: alarmData.isActive,
+                      onChanged: (value) async {
+                        final provider = ref.watch(alarmRepositoryProvider);
+                        final prefs = await provider.getSharedPreferences();
+                        await provider.toggleIsActive(alarmData.id, prefs);
+                        updateFunc();
+                      },
+                      thumbColor: white,
+                      activeColor: baseDarkColor,
+                      trackColor: lightGrey),
+                )
               ]),
             )));
   }

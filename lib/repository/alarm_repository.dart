@@ -45,6 +45,15 @@ class AlarmRepository {
     await saveToSharedPreferences(alarmDataList, prefs);
   }
 
+  Future<void> toggleIsActive(String id, SharedPreferences prefs) async {
+    final List<AlarmData> alarmDataList = await getAlarmData(prefs);
+    final index = alarmDataList.indexWhere((element) => element.id == id);
+    if (index != -1) {
+      alarmDataList[index].isActive = !alarmDataList[index].isActive;
+    }
+    await saveToSharedPreferences(alarmDataList, prefs);
+  }
+
   Future<void> deleteAlarmData(String id, SharedPreferences prefs) async {
     final List<AlarmData> alarmDataList = await getAlarmData(prefs);
     alarmDataList.removeWhere((element) => element.id == id);
