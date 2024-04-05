@@ -41,6 +41,16 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
     return [hour, min];
   }
 
+  String convertToTimeFromTimeList(List<String> timeList) {
+    String hour = timeList[0];
+    String min = timeList[1];
+    return "$hour:$min";
+  }
+
+  void handleChangeTextField(int index, String value, List<String> alarmTime) {
+    alarmTime[index] = value;
+  }
+
   @override
   Widget build(BuildContext context) {
     String _id = widget.alarmData.id;
@@ -102,6 +112,8 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                   FilteringTextInputFormatter.digitsOnly,
                                   UpdateAlarmTimeFormatter(isHour: true)
                                 ],
+                                onChanged: (value) => (handleChangeTextField(
+                                    0, value, _alarmTime)),
                                 showCursor: false,
                                 autofocus: true,
                                 keyboardType: TextInputType.number,
@@ -133,6 +145,8 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                   FilteringTextInputFormatter.digitsOnly,
                                   UpdateAlarmTimeFormatter(isHour: false)
                                 ],
+                                onChanged: (value) => (handleChangeTextField(
+                                    1, value, _alarmTime)),
                                 showCursor: false,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
@@ -266,13 +280,22 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 color: baseDarkColor,
                                 fontWeight: FontWeight.w500)),
                         onPressed: () async {
+                          final provider = ref.watch(alarmRepositoryProvider);
+                          final prefs = await provider.getSharedPreferences();
+                          final AlarmData customizedAlarmData = AlarmData(
+                              id: _id,
+                              alarmTime: convertToTimeFromTimeList(_alarmTime),
+                              label: _label,
+                              isActive: true,
+                              repeatedDays: _repeatedDays);
                           if (widget.newAlarm) {
-                            final provider = ref.watch(alarmRepositoryProvider);
-                            final prefs = await provider.getSharedPreferences();
-                            await provider.saveAlarmData(
-                                widget.alarmData, prefs);
-                            widget.updateFunc();
+                            await provider.createNewAlarmData(
+                                customizedAlarmData, prefs);
+                          } else {
+                            await provider.updateAlarmData(
+                                customizedAlarmData, _id, prefs);
                           }
+                          widget.updateFunc();
                           if (mounted) {
                             Navigator.pop(context);
                           }

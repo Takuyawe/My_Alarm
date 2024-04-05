@@ -28,10 +28,20 @@ class AlarmRepository {
     return alarmDataList;
   }
 
-  Future<void> saveAlarmData(
+  Future<void> createNewAlarmData(
       AlarmData alarmData, SharedPreferences prefs) async {
     final List<AlarmData> alarmDataList = await getAlarmData(prefs);
     alarmDataList.add(alarmData);
+    await saveToSharedPreferences(alarmDataList, prefs);
+  }
+
+  Future<void> updateAlarmData(
+      AlarmData alarmData, String id, SharedPreferences prefs) async {
+    final List<AlarmData> alarmDataList = await getAlarmData(prefs);
+    final index = alarmDataList.indexWhere((element) => element.id == id);
+    if (index != -1) {
+      alarmDataList[index] = alarmData;
+    }
     await saveToSharedPreferences(alarmDataList, prefs);
   }
 
