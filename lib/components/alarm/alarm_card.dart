@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_alarm/importer.dart';
+import 'package:my_alarm/ui_core/get_repeat_string.dart';
 
 class AlarmCard extends ConsumerWidget {
   final AlarmData alarmData;
@@ -14,14 +15,14 @@ class AlarmCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-        height: 270,
-        width: 270,
-        child: GestureDetector(
-            onTap: () => {
-                  showAlarmConfigScreen(context, ref,
-                      alarmData: alarmData, updateFunc: updateFunc)
-                },
-            child: Card(
+      height: 270,
+      width: 270,
+      child: GestureDetector(
+          onTap: () => {
+                showAlarmConfigScreen(context, ref,
+                    alarmData: alarmData, updateFunc: updateFunc)
+              },
+          child: Card(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               color: grey,
               child: Column(children: [
@@ -36,8 +37,9 @@ class AlarmCard extends ConsumerWidget {
                         children: [
                           Text(alarmData.label,
                               style: TextStyle(color: white, fontSize: 20)),
-                          Text("Repeat: None",
-                              style: TextStyle(color: white, fontSize: 20)),
+                          Text(
+                              "Repeat: ${getRepeatString(alarmData.repeatedDays)}",
+                              style: TextStyle(color: white, fontSize: 16)),
                         ]),
                     trailing: IconButton(
                         onPressed: () async {
@@ -48,7 +50,7 @@ class AlarmCard extends ConsumerWidget {
                         },
                         icon: Icon(Icons.delete, color: white))),
                 Container(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.bottomLeft,
                   height: 50,
                   margin: EdgeInsets.only(left: 20),
                   child: CupertinoSwitch(
@@ -62,8 +64,8 @@ class AlarmCard extends ConsumerWidget {
                       thumbColor: white,
                       activeColor: baseDarkColor,
                       trackColor: lightGrey),
-                )
-              ]),
-            )));
+                ),
+              ]))),
+    );
   }
 }
