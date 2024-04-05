@@ -33,6 +33,19 @@ class AlarmConfigScreen extends ConsumerStatefulWidget {
 
 class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
   int _alarmTimeFocused = 0;
+  late String _id;
+  late List<String> _alarmTime;
+  late String _label;
+  late List<int> _repeatedDays;
+
+  @override
+  void initState() {
+    super.initState();
+    _id = widget.alarmData.id;
+    _alarmTime = getTimeList(widget.alarmData.alarmTime);
+    _label = widget.alarmData.label;
+    _repeatedDays = widget.alarmData.repeatedDays;
+  }
 
   List<String> getTimeList(String time) {
     List<String> timeParts = time.split(":");
@@ -51,32 +64,27 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
     alarmTime[index] = value;
   }
 
+  void handleChangeLabel(String value) {
+    setState(() {
+      _label = value;
+    });
+  }
+
+  void handleChangeAlarmTimeFocused(int index) {
+    if (_alarmTimeFocused == index) return;
+    setState(() {
+      _alarmTimeFocused = _alarmTimeFocused == 0 ? 1 : 0;
+    });
+  }
+
+  void handleToggleButton(int index) {
+    setState(() {
+      _repeatedDays[index] = _repeatedDays[index] == 0 ? 1 : 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    String _id = widget.alarmData.id;
-    List<String> _alarmTime = getTimeList(widget.alarmData.alarmTime);
-    String _label = widget.alarmData.label;
-    List<int> _repeatedDays = widget.alarmData.repeatedDays;
-
-    void handleChangeAlarmTimeFocused(int index) {
-      if (_alarmTimeFocused == index) return;
-      setState(() {
-        _alarmTimeFocused = _alarmTimeFocused == 0 ? 1 : 0;
-      });
-    }
-
-    void handleChangeLabel(String value) {
-      setState(() {
-        _label = value;
-      });
-    }
-
-    void handleToggleButton(int index) {
-      setState(() {
-        _repeatedDays[index] = _repeatedDays[index] == 0 ? 1 : 0;
-      });
-    }
-
     return (Dialog(
         shadowColor: white,
         child: Container(
@@ -280,7 +288,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 color: baseDarkColor,
                                 fontWeight: FontWeight.w500)),
                         onPressed: () async {
-                          final provider = ref.watch(alarmRepositoryProvider);
+                          final provider = ref.read(alarmRepositoryProvider);
                           final prefs = await provider.getSharedPreferences();
                           final AlarmData customizedAlarmData = AlarmData(
                               id: _id,

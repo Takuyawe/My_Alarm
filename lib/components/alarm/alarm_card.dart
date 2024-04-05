@@ -34,7 +34,7 @@ class AlarmCard extends ConsumerWidget {
                     subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Alarm Message",
+                          Text(alarmData.label,
                               style: TextStyle(color: white, fontSize: 20)),
                           Text("Repeat: None",
                               style: TextStyle(color: white, fontSize: 20)),
