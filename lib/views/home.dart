@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:my_alarm/importer.dart';
-import 'package:my_alarm/providers/alarm_data_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +21,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final provider = ref.read(alarmRepositoryProvider);
     final prefs = await provider.getSharedPreferences();
     alarmDataList = await provider.getAlarmData(prefs);
+    scheduleAlarm(alarmDataList);
+    resetAtDateChanged(alarmDataList);
     setState(() {
       isLoading = false;
     });
