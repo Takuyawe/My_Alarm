@@ -107,13 +107,17 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                   if (event is KeyDownEvent &&
                       event.logicalKey == LogicalKeyboardKey.tab) {
                     if (_alarmTimeFocused == 0) {
-                      setState(() {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
                         FocusScope.of(context).requestFocus(_focusNodeMin);
+                      });
+                      setState(() {
                         _alarmTimeFocused = 1;
                       });
                     } else {
-                      setState(() {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
                         FocusScope.of(context).requestFocus(_focusNodeHour);
+                      });
+                      setState(() {
                         _alarmTimeFocused = 0;
                       });
                     }
