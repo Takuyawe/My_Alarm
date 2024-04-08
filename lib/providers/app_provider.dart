@@ -15,3 +15,7 @@ final scheduleAlarmRepositoryProvider =
     Provider<ScheduleAlarmRepository>((ref) {
   return ScheduleAlarmRepository();
 });
+
+final navigatorKeyProvider = Provider<GlobalKey<NavigatorState>>((ref) {
+  return GlobalKey<NavigatorState>();
+});

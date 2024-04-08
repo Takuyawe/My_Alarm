@@ -311,7 +311,10 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                     fontWeight: FontWeight.w500)),
                             onPressed: () {
                               // TODO: if changed, ask for confirmation
-                              Navigator.pop(context);
+                              ref
+                                  .read(navigatorKeyProvider)
+                                  .currentState!
+                                  .pop();
                             }),
                         Gap(10),
                         OutlinedButton(
@@ -353,12 +356,15 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                   ref.read(scheduleAlarmRepositoryProvider);
                               final alarmDataList =
                                   await provider.getAlarmData(prefs);
-                              scheduleAlarmProvider
-                                  .scheduleAlarm(alarmDataList);
+                              final navigatorKey =
+                                  ref.read(navigatorKeyProvider);
+                              scheduleAlarmProvider.scheduleAlarm(
+                                  navigatorKey, alarmDataList);
 
-                              if (mounted) {
-                                Navigator.pop(context);
-                              }
+                              ref
+                                  .read(navigatorKeyProvider)
+                                  .currentState!
+                                  .pop();
                             }),
                         Gap(20)
                       ],

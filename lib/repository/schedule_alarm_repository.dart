@@ -1,9 +1,12 @@
+import 'package:my_alarm/components/alarm/alarm_notification_screen.dart';
+
 import '../importer.dart';
 
 class ScheduleAlarmRepository {
   List<Timer> timerList = [];
 
-  void scheduleAlarm(List<AlarmData> alarmDataList) {
+  void scheduleAlarm(
+      GlobalKey<NavigatorState> navigatorKey, List<AlarmData> alarmDataList) {
     clearAllAlarms();
     for (var alarmData in alarmDataList) {
       if (alarmData.isActive == false) continue;
@@ -15,20 +18,22 @@ class ScheduleAlarmRepository {
       if (alarmDateTime.isBefore(now)) continue;
       Duration duration = alarmDateTime.difference(now);
       Timer timer = Timer(duration, () {
+        showAlarmNotificationScreen(navigatorKey, alarmData: alarmData);
         SwiftPlatformService.bringAppToFront();
       });
       timerList.add(timer);
     }
   }
 
-  void resetAtDateChanged(List<AlarmData> alarmDataList) {
+  void resetAtDateChanged(
+      GlobalKey<NavigatorState> navigatorKey, List<AlarmData> alarmDataList) {
     DateTime now = DateTime.now();
     DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1);
     Duration duration = nextMidnight.difference(now);
 
     Timer(duration, () {
-      scheduleAlarm(alarmDataList);
-      resetAtDateChanged(alarmDataList);
+      scheduleAlarm(navigatorKey, alarmDataList);
+      resetAtDateChanged(navigatorKey, alarmDataList);
     });
   }
 
