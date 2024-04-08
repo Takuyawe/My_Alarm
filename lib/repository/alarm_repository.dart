@@ -32,6 +32,7 @@ class AlarmRepository {
       AlarmData alarmData, SharedPreferences prefs) async {
     final List<AlarmData> alarmDataList = await getAlarmData(prefs);
     alarmDataList.add(alarmData);
+    sortAlarmDataList(alarmDataList);
     await saveToSharedPreferences(alarmDataList, prefs);
   }
 
