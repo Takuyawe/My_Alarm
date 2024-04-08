@@ -32,7 +32,7 @@ class AlarmCard extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(alarmData.alarmTime,
+                        Text(getPaddedTime(alarmData.alarmTime),
                             style: TextStyle(
                                 fontSize: 55,
                                 color: white,

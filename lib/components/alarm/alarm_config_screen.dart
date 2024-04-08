@@ -49,13 +49,6 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
     _repeatedDays = widget.alarmData.repeatedDays;
   }
 
-  List<String> getTimeList(String time) {
-    List<String> timeParts = time.split(":");
-    String hour = int.parse(timeParts[0]).toString().padLeft(2, "0");
-    String min = int.parse(timeParts[1]).toString().padLeft(2, "0");
-    return [hour, min];
-  }
-
   String convertToTimeFromTimeList(List<String> timeList) {
     String hour = timeList[0];
     String min = timeList[1];
