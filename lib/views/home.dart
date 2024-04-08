@@ -50,12 +50,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: baseDarkColor,
       appBar: AppBar(title: const Text("Alarm App")),
       body: Container(
-          child: Row(
-              children: alarmDataList
-                  .map((alarmData) => AlarmCard(
-                      alarmData: alarmData,
-                      updateAlarmDataList: updateAlarmDataList))
-                  .toList())),
+        child: Wrap(
+          direction: Axis.horizontal, // 横方向に要素を配置
+          spacing: 8.0, // 横のスペース
+          runSpacing: 4.0, // 縦のスペース
+          children: alarmDataList
+              .map((alarmData) => AlarmCard(
+                  alarmData: alarmData,
+                  updateAlarmDataList: updateAlarmDataList))
+              .toList(),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
         child: const Icon(Icons.add),
