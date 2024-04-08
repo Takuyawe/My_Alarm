@@ -20,3 +20,4 @@ export "package:my_alarm/models/alarm_data.dart";
 export "package:my_alarm/modules/get_week_day.dart";
 export 'package:my_alarm/modules/get_repeat_string.dart';
 export "package:my_alarm/modules/sort_alarm_data_list.dart";
+export "package:my_alarm/modules/default_alarm_data_creator.dart";

@@ -60,12 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         backgroundColor: lightBlue,
         child: const Icon(Icons.add),
         onPressed: () {
-          AlarmData alarmData = AlarmData(
-              id: Uuid().v4(),
-              alarmTime: DateFormat("HH:mm").format(DateTime.now()),
-              repeatedDays: [0, 0, 0, 0, 0, 0, 0],
-              label: "Alarm",
-              isActive: true);
+          AlarmData alarmData = getDefaultAlarmData();
           showAlarmConfigScreen(context, ref,
               alarmData: alarmData,
               newAlarm: true,
