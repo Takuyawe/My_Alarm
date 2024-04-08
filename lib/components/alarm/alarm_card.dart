@@ -47,6 +47,12 @@ class AlarmCard extends ConsumerWidget {
                               await provider.deleteAlarmData(
                                   alarmData.id, prefs);
                               updateAlarmDataList();
+                              final scheduleAlarmProvider =
+                                  ref.read(scheduleAlarmRepositoryProvider);
+                              final alarmDataList =
+                                  await provider.getAlarmData(prefs);
+                              scheduleAlarmProvider
+                                  .scheduleAlarm(alarmDataList);
                             },
                             icon: Icon(Icons.delete, color: white)),
                       ],
@@ -74,6 +80,12 @@ class AlarmCard extends ConsumerWidget {
                             final prefs = await provider.getSharedPreferences();
                             await provider.toggleIsActive(alarmData.id, prefs);
                             updateAlarmDataList();
+
+                            final scheduleAlarmProvider =
+                                ref.read(scheduleAlarmRepositoryProvider);
+                            final alarmDataList =
+                                await provider.getAlarmData(prefs);
+                            scheduleAlarmProvider.scheduleAlarm(alarmDataList);
                           },
                           thumbColor: white,
                           activeColor: baseDarkColor,

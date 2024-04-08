@@ -306,6 +306,13 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                 customizedAlarmData, _id, prefs);
                           }
                           widget.updateAlarmDataList();
+
+                          final scheduleAlarmProvider =
+                              ref.read(scheduleAlarmRepositoryProvider);
+                          final alarmDataList =
+                              await provider.getAlarmData(prefs);
+                          scheduleAlarmProvider.scheduleAlarm(alarmDataList);
+
                           if (mounted) {
                             Navigator.pop(context);
                           }

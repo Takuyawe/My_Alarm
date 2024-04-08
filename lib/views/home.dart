@@ -21,8 +21,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final provider = ref.read(alarmRepositoryProvider);
     final prefs = await provider.getSharedPreferences();
     alarmDataList = await provider.getAlarmData(prefs);
-    scheduleAlarm(alarmDataList);
-    resetAtDateChanged(alarmDataList);
+    final scheduleAlarmProvider = ref.read(scheduleAlarmRepositoryProvider);
+    scheduleAlarmProvider.scheduleAlarm(alarmDataList);
+    scheduleAlarmProvider.resetAtDateChanged(alarmDataList);
     setState(() {
       isLoading = false;
     });
