@@ -52,9 +52,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(title: const Text("Alarm App")),
       body: SingleChildScrollView(
         child: Wrap(
-          direction: Axis.horizontal, // 横方向に要素を配置
-          spacing: 8.0, // 横のスペース
-          runSpacing: 4.0, // 縦のスペース
+          direction: Axis.horizontal,
+          spacing: 8.0,
+          runSpacing: 4.0,
           children: alarmDataList
               .map((alarmData) => AlarmCard(
                   alarmData: alarmData,

@@ -4,9 +4,22 @@ import FlutterMacOS
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var window: NSWindow?
+
     var flutterViewController: FlutterViewController!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        guard let window = NSApplication.shared.windows.first else {
+            return
+        }
+        self.window = window
+
+        // 最小化ボタンを無効にする
+        window.standardWindowButton(.miniaturizeButton)?.isEnabled = false
+
+        // アプリを最大化する
+        window.setFrame(NSRect(x: 0, y: 0, width: NSScreen.main!.frame.width, height: NSScreen.main!.frame.height), display: true)
+
         // FlutterViewControllerの取得
         let flutterViewController = NSApplication.shared.windows.first!.contentViewController as! FlutterViewController
         self.flutterViewController = flutterViewController
