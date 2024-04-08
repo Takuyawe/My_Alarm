@@ -50,14 +50,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: baseDarkColor,
       appBar: AppBar(title: const Text("Alarm App")),
-      body: Wrap(
-        direction: Axis.horizontal, // 横方向に要素を配置
-        spacing: 8.0, // 横のスペース
-        runSpacing: 4.0, // 縦のスペース
-        children: alarmDataList
-            .map((alarmData) => AlarmCard(
-                alarmData: alarmData, updateAlarmDataList: updateAlarmDataList))
-            .toList(),
+      body: SingleChildScrollView(
+        child: Wrap(
+          direction: Axis.horizontal, // 横方向に要素を配置
+          spacing: 8.0, // 横のスペース
+          runSpacing: 4.0, // 縦のスペース
+          children: alarmDataList
+              .map((alarmData) => AlarmCard(
+                  alarmData: alarmData,
+                  updateAlarmDataList: updateAlarmDataList))
+              .toList(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: lightBlue,
