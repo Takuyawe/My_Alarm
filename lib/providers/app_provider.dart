@@ -10,3 +10,8 @@ import "package:my_alarm/importer.dart";
 final alarmRepositoryProvider = Provider<AlarmRepository>((ref) {
   return AlarmRepository();
 });
+
+final scheduleAlarmRepositoryProvider =
+    Provider<ScheduleAlarmRepository>((ref) {
+  return ScheduleAlarmRepository();
+});
