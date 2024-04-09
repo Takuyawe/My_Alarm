@@ -19,6 +19,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         useMaterial3: true,
       ),
       navigatorKey: ref.read(navigatorKeyProvider),
+      debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
     );
   }

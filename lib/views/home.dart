@@ -52,7 +52,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       backgroundColor: baseDarkColor,
-      appBar: AppBar(title: const Text("Alarm App")),
+      appBar: AppBar(
+          backgroundColor: baseDarkColor,
+          title: const Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't work hard !!",
+                        style: TextStyle(color: white, fontSize: 40)),
+                    Divider(
+                        color: white, thickness: 2, indent: 20, endIndent: 20),
+                  ]))),
       body: SingleChildScrollView(
         child: Wrap(
           direction: Axis.horizontal,

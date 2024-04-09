@@ -13,6 +13,7 @@ export "package:my_alarm/constants/strings.dart";
 export 'package:my_alarm/components/alarm/alarm_card.dart';
 export 'package:my_alarm/components/alarm/alarm_config_screen.dart';
 export "package:my_alarm/components/alarm/week_button.dart";
+export 'package:my_alarm/components/alarm/update_alarm_time_formatter.dart';
 export "package:my_alarm/repository/alarm_repository.dart";
 export "package:my_alarm/repository/schedule_alarm_repository.dart";
 export "package:my_alarm/providers/app_provider.dart";

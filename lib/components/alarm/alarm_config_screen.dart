@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_alarm/components/alarm/update_alarm_time_formatter.dart';
 import 'package:my_alarm/importer.dart';
 
 void showAlarmConfigScreen(BuildContext context, WidgetRef ref,
@@ -161,6 +159,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                     ),
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                         height: 1.2,
                                         fontSize: 60,
@@ -196,6 +195,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                     ),
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                         height: 1.2,
                                         fontSize: 60,
