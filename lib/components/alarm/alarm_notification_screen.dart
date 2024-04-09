@@ -1,22 +1,26 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_alarm/importer.dart';
 
 void showAlarmNotificationScreen(GlobalKey<NavigatorState> navigatorKey,
-    {required AlarmData alarmData}) {
+    {required AlarmData alarmData, required updateAlarmDataList}) {
   showDialog(
       context: navigatorKey.currentContext!,
-      builder: (context) => AlarmNotificationScreen(alarmData: alarmData));
+      builder: (context) => AlarmNotificationScreen(
+          alarmData: alarmData, updateAlarmDataList: updateAlarmDataList));
 }
 
-class AlarmNotificationScreen extends StatelessWidget {
+class AlarmNotificationScreen extends ConsumerWidget {
   final AlarmData alarmData;
+  final Function updateAlarmDataList;
 
-  const AlarmNotificationScreen({super.key, required this.alarmData});
+  const AlarmNotificationScreen(
+      {super.key, required this.alarmData, required this.updateAlarmDataList});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(
         shadowColor: white,
         child: Container(
@@ -80,8 +84,15 @@ class AlarmNotificationScreen extends StatelessWidget {
                     ),
                     Gap(30),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.pop(context);
+                          if (getRepeatString(alarmData.repeatedDays) ==
+                              "None") {
+                            final provider = ref.watch(alarmRepositoryProvider);
+                            final prefs = await provider.getSharedPreferences();
+                            await provider.toggleIsActive(alarmData.id, prefs);
+                            updateAlarmDataList();
+                          }
                         },
                         style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(500, 50)),

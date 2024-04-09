@@ -41,6 +41,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
   late List<int> _repeatedDays;
   final FocusNode _focusNodeHour = FocusNode();
   final FocusNode _focusNodeMin = FocusNode();
+  late Function updateAlarmDataList;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
     _alarmTime = getTimeList(widget.alarmData.alarmTime);
     _label = widget.alarmData.label;
     _repeatedDays = widget.alarmData.repeatedDays;
+    updateAlarmDataList = widget.updateAlarmDataList;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNodeHour);
     });
@@ -362,8 +364,8 @@ class _AlarmConfigScreenState extends ConsumerState<AlarmConfigScreen> {
                                   await provider.getAlarmData(prefs);
                               final navigatorKey =
                                   ref.read(navigatorKeyProvider);
-                              scheduleAlarmProvider.scheduleAlarm(
-                                  navigatorKey, alarmDataList);
+                              scheduleAlarmProvider.scheduleAlarm(navigatorKey,
+                                  alarmDataList, updateAlarmDataList);
 
                               ref
                                   .read(navigatorKeyProvider)

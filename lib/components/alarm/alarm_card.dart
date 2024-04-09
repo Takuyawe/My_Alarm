@@ -53,8 +53,8 @@ class AlarmCard extends ConsumerWidget {
                                   await provider.getAlarmData(prefs);
                               final navigatorKey =
                                   ref.read(navigatorKeyProvider);
-                              scheduleAlarmProvider.scheduleAlarm(
-                                  navigatorKey, alarmDataList);
+                              scheduleAlarmProvider.scheduleAlarm(navigatorKey,
+                                  alarmDataList, updateAlarmDataList);
                             },
                             icon: Icon(Icons.delete, color: white)),
                       ],
@@ -88,8 +88,8 @@ class AlarmCard extends ConsumerWidget {
                             final alarmDataList =
                                 await provider.getAlarmData(prefs);
                             final navigatorKey = ref.read(navigatorKeyProvider);
-                            scheduleAlarmProvider.scheduleAlarm(
-                                navigatorKey, alarmDataList);
+                            scheduleAlarmProvider.scheduleAlarm(navigatorKey,
+                                alarmDataList, updateAlarmDataList);
                           },
                           thumbColor: white,
                           activeColor: baseDarkColor,

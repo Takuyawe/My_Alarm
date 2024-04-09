@@ -5,8 +5,8 @@ import '../importer.dart';
 class ScheduleAlarmRepository {
   List<Timer> timerList = [];
 
-  void scheduleAlarm(
-      GlobalKey<NavigatorState> navigatorKey, List<AlarmData> alarmDataList) {
+  void scheduleAlarm(GlobalKey<NavigatorState> navigatorKey,
+      List<AlarmData> alarmDataList, Function updateAlarmDataList) {
     clearAllAlarms();
     for (var alarmData in alarmDataList) {
       if (alarmData.isActive == false) continue;
@@ -18,22 +18,23 @@ class ScheduleAlarmRepository {
       if (alarmDateTime.isBefore(now)) continue;
       Duration duration = alarmDateTime.difference(now);
       Timer timer = Timer(duration, () {
-        showAlarmNotificationScreen(navigatorKey, alarmData: alarmData);
+        showAlarmNotificationScreen(navigatorKey,
+            alarmData: alarmData, updateAlarmDataList: updateAlarmDataList);
         SwiftPlatformService.bringAppToFront();
       });
       timerList.add(timer);
     }
   }
 
-  void resetAtDateChanged(
-      GlobalKey<NavigatorState> navigatorKey, List<AlarmData> alarmDataList) {
+  void resetAtDateChanged(GlobalKey<NavigatorState> navigatorKey,
+      List<AlarmData> alarmDataList, Function updateAlarmDataList) {
     DateTime now = DateTime.now();
     DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1);
     Duration duration = nextMidnight.difference(now);
 
     Timer(duration, () {
-      scheduleAlarm(navigatorKey, alarmDataList);
-      resetAtDateChanged(navigatorKey, alarmDataList);
+      scheduleAlarm(navigatorKey, alarmDataList, updateAlarmDataList);
+      resetAtDateChanged(navigatorKey, alarmDataList, updateAlarmDataList);
     });
   }
 

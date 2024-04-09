@@ -23,8 +23,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     alarmDataList = await provider.getAlarmData(prefs);
     final scheduleAlarmProvider = ref.read(scheduleAlarmRepositoryProvider);
     final navigatorKey = ref.read(navigatorKeyProvider);
-    scheduleAlarmProvider.scheduleAlarm(navigatorKey, alarmDataList);
-    scheduleAlarmProvider.resetAtDateChanged(navigatorKey, alarmDataList);
+    scheduleAlarmProvider.scheduleAlarm(
+        navigatorKey, alarmDataList, updateAlarmDataList);
+    scheduleAlarmProvider.resetAtDateChanged(
+        navigatorKey, alarmDataList, updateAlarmDataList);
     setState(() {
       isLoading = false;
     });
