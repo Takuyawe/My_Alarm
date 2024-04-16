@@ -1,21 +1,11 @@
 #!/bin/bash
 
-while true; do
-  # FlutterプロセスのPIDを取得し終了
-  FLUTTER_PID=$(pgrep -f "flutter_tools.*macos")
-  if [ ! -z "$FLUTTER_PID" ]; then
-    echo "Flutter process found: $FLUTTER_PID. Terminating..."
-    kill $FLUTTER_PID
-  fi
+# 現在実行中の Flutter macOS アプリのプロセスを探して終了させる
+pkill -f "flutter_tools.*macos"
 
-  # 一定時間待ってからFlutterアプリを再起動（安全のための小休止）
-  sleep 5
+# Flutter アプリを再起動
+cd /Users/nemototakuya/workspace/dev/personal/my_alarm
+flutter run -d macos
 
-  # Flutterアプリを実行
-  echo "Starting flutter run..."
-  flutter run -d macos
-
-  # 指定した時間（例：1時間）待つ
-  echo "Waiting for the next restart..."
-  sleep 3600
-done
+# crontab -e
+# * */1 * * * /Users/nemototakuya/workspace/dev/personal/my_alarm/run_flutter.sh
